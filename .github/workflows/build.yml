@@ -1,0 +1,14 @@
+name: Build & Deploy Android SDk
+on: [push]
+jobs:
+  build:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1 # 将仓库内容拷贝到Ubuntu系统的虚拟环境
+    - name: Build the Docker image # 步骤名字
+      run: |
+        docker login --username=${{ secrets.DOCKER_USN }} registry.cn-hangzhou.aliyuncs.com --password=${{ secrets.DOCKER_PWD }} # 登录docker，并使用Secret里配置的参数
+        docker build -t docker-android-sdk:latest . #执行构建
+        docker tag docker-android-sdk registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk
+        docker push registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk:latest # 推送
