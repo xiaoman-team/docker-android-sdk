@@ -63,12 +63,14 @@ RUN mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.and
     sdkmanager \
     "build-tools;28.0.3" \
     "build-tools;29.0.3" \
+    "build-tools;30.0.0" \
     > /dev/null \
     && \
     echo "Install Platforms " && \
     sdkmanager \
     "platforms;android-28" \
     "platforms;android-29" \
+    "platforms;android-30" \
     > /dev/null
 
 
@@ -111,7 +113,7 @@ ENV FLUTTER_HOME="/opt/flutter"
 # Download Flutter sdk
 RUN echo "Install Flutter sdk" && \
     cd /opt && \
-    wget --quiet https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.12.13+hotfix.9-stable.tar.xz -O flutter.tar.xz && \
+    wget --quiet https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.4-stable.tar.xz -O flutter.tar.xz && \
     tar xf flutter.tar.xz && \
     rm -f flutter.tar.xz
 #Set PATH
