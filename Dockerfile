@@ -63,7 +63,7 @@ RUN mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.and
     sdkmanager \
     "build-tools;28.0.3" \
     "build-tools;29.0.3" \
-    "build-tools;30.0.0" \
+    "build-tools;30.0.1" \
     > /dev/null \
     && \
     echo "Install Platforms " && \
