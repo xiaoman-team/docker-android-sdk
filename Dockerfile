@@ -75,24 +75,6 @@ RUN mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.and
     "platforms;android-30" \
     > /dev/null
 
-
-#
-# Install GRALDE
-#
-
-ENV GRALDE_VERSION="gradle-6.4"
-ENV GRADLE_DIR="gradle"
-#Download Gradle SDK
-RUN echo "Installing GRADLE SDK" && \
-    wget --quiet --output-document=gradle.zip \
-        "https://services.gradle.org/distributions/${GRALDE_VERSION}-bin.zip" && \
-    unzip gradle.zip && \
-    mv "${GRALDE_VERSION}" "${GRADLE_DIR}" && \
-    mv "${GRADLE_DIR}" /opt && \
-    rm --force gradle.zip > /dev/null
-ENV GRADLE_HOME=/opt/gradle
-ENV PATH="$PATH:$GRADLE_HOME/bin"
-
 #
 # Install Flutter SDK
 #
@@ -115,7 +97,7 @@ ENV FLUTTER_HOME="/opt/flutter"
 # Download Flutter sdk
 RUN echo "Install Flutter sdk" && \
     cd /opt && \
-    wget --quiet https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.5-stable.tar.xz -O flutter.tar.xz && \
+    wget --quiet https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.22.4-stable.tar.xz -O flutter.tar.xz && \
     tar xf flutter.tar.xz && \
     rm -f flutter.tar.xz
 #Set PATH
