@@ -1,10 +1,17 @@
 name: Build & Deploy Android SDk
-on: [push]
+on:
+  push:
+    tags:
+      - '*'
 jobs:
   build:
     name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
+    - name: Set output
+      id: vars
+      run: echo ::set-output name=tag::${GITHUB_REF:10}
+
     - uses: actions/checkout@v1 # 将仓库内容拷贝到Ubuntu系统的虚拟环境
     - name: Build the Docker image # 步骤名字
       run: |
@@ -13,11 +20,15 @@ jobs:
     - name: Login Aliyun
       run: |
         docker login --username=${{ secrets.DOCKER_USN }} registry.cn-hangzhou.aliyuncs.com --password=${{ secrets.DOCKER_PWD }} # 登录docker，并使用Secret里配置的参数
-        
+
     - name: Tag Images
       run: |
-        docker tag docker-android-sdk registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk
+        docker tag docker-android-sdk registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk:latest
+        docker tag docker-android-sdk registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk:${{ steps.vars.outputs.tag }}
 
     - name: Push To Aliyun
       run: |
-        docker push registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk:latest # 推送
+        # 推送
+        docker push registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk:latest
+        # 做远程标记
+        docker push registry.cn-hangzhou.aliyuncs.com/xiaoman-cn/docker-android-sdk:${{ steps.vars.outputs.tag }}
