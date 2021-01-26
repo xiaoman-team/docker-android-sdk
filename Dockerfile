@@ -73,7 +73,7 @@ RUN mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.and
     "platforms;android-28" \
     "platforms;android-29" \
     "platforms;android-30" \
-    > /dev/null
+    > /dev/null \
     && \
     echo "Install Android-ndk " && \
     sdkmanager \
