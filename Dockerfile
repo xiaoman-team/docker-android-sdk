@@ -74,6 +74,11 @@ RUN mkdir ~/.android && echo '### User Sources for Android SDK Manager' > ~/.and
     "platforms;android-29" \
     "platforms;android-30" \
     > /dev/null
+    && \
+    echo "Install Android-ndk " && \
+    sdkmanager \
+    "ndk;21.1.6352462" \
+    > /dev/null
 
 #
 # Install Flutter SDK
